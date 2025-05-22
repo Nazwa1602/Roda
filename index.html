@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Integral Menyenangkan</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9ff;
+            color: #333;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+        
+        /* Halaman Container */
+        .page-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        /* Halaman Hello */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        #hello-page {
+            background: linear-gradient(135deg, #FF9A8B 0%, #FF6B95 50%, #FF8E53 100%);
+            z-index: 10;
+        }
+        
+        .spaan-character {
+            width: 250px;
+            height: 250px;
+            background: url('https://i.pinimg.com/originals/b5/34/df/b534df05c4b06ebd32159b2f9325d83f.png') no-repeat center;
+            background-size: contain;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite, rotate 4s infinite linear;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: colorChange 5s infinite;
+        }
+        
+        .btn {
+            padding: 15px 50px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background-color: #fff;
+            color: #FF6B95;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+            background-color: #FF8E53;
+            color: white;
+        }
+        
+        /* Halaman Peraturan */
+        #rules-page {
+            background: linear-gradient(135deg, #74EBD5 0%, #9FACE6 100%);
+            z-index: 5;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        
+        .rules-container {
+            background-color: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: scale(0.9);
+            opacity: 0;
+            animation: fadeInUp 0.8s 0.3s forwards;
+        }
+        
+        .rules-title {
+            color: #FF6B95;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .rules-list {
+            text-align: left;
+            margin: 40px 0;
+            list-style-type: none;
+        }
+        
+        .rules-list li {
+            margin-bottom: 25px;
+            padding-left: 50px;
+            position: relative;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .rules-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background-color: #FF8E53;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .rules-list li:nth-child(1):before { content: "1"; }
+        .rules-list li:nth-child(2):before { content: "2"; }
+        .rules-list li:nth-child(3):before { content: "3"; }
+        .rules-list li:nth-child(4):before { content: "4"; }
+        
+        /* Animations */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+            100% { transform: rotate(-8deg); }
+        }
+        
+        @keyframes colorChange {
+            0% { color: #fff; }
+            25% { color: #FFD166; }
+            50% { color: #06D6A0; }
+            75% { color: #118AB2; }
+            100% { color: #fff; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeInUp {
+            0% { 
+                transform: translateY(20px) scale(0.9);
+                opacity: 0;
+            }
+            100% { 
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Floating shapes decoration */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .spaan-character {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .rules-list li {
+                font-size: 1.1rem;
+                padding-left: 40px;
+            }
+            
+            .rules-list li:before {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Halaman Hello -->
+        <div class="page" id="hello-page">
+            <div class="spaan-character"></div>
+            <h1>Hello Mathematicians!</h1>
+            <button class="btn" id="start-btn">START</button>
+            
+            <!-- Decorative shapes -->
+            <div class="shape" style="width: 100px; height: 100px; background: #FFD166; top: 10%; left: 5%; animation-delay: 0s;"></div>
+            <div class="shape" style="width: 150px; height: 150px; background: #06D6A0; bottom: 15%; right: 10%; animation-delay: 2s;"></div>
+            <div class="shape" style="width: 80px; height: 80px; background: #118AB2; top: 60%; left: 20%; animation-delay: 4s;"></div>
+        </div>
+        
+        <!-- Halaman Peraturan -->
+        <div class="page" id="rules-page">
+            <div class="rules-container">
+                <h2 class="rules-title">Cara Bermain</h2>
+                <ul class="rules-list">
+                    <li>Perhatikan soal Integral yang muncul di layar</li>
+                    <li>Masukkan Pangkat dari variabel (x) yang ada pada soal</li>
+                    <li>Masukkan koefisien dari variabel (angka di depan x)</li>
+                    <li>Lihat Hasil perhitungan integral yang muncul</li>
+                </ul>
+                <a href="https://nazwa1602.github.io/Roda/" class="btn">MULAI BERMAIN</a>
+            </div>
+            
+            <!-- Decorative shapes -->
+            <div class="shape" style="width: 120px; height: 120px; background: #FF9A8B; top: 15%; right: 8%; animation-delay: 1s;"></div>
+            <div class="shape" style="width: 90px; height: 90px; background: #74EBD5; bottom: 20%; left: 7%; animation-delay: 3s;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Animasi transisi antar halaman
+        document.getElementById('start-btn').addEventListener('click', function() {
+            const helloPage = document.getElementById('hello-page');
+            const rulesPage = document.getElementById('rules-page');
+            
+            // Animasi keluar halaman hello
+            helloPage.style.transform = 'translateY(-100%)';
+            helloPage.style.opacity = '0';
+            
+            // Animasi masuk halaman rules
+            setTimeout(() => {
+                rulesPage.style.transform = 'translateY(0)';
+                rulesPage.style.opacity = '1';
+            }, 500);
+            
+            // Tambahkan efek bounce pada tombol
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = 'pulse 2s infinite';
+            }, 10);
+        });
+        
+        // Tambahkan shapes secara dinamis
+        function createShapes() {
+            const colors = ['#FF9A8B', '#FF6B95', '#FF8E53', '#74EBD5', '#9FACE6', '#FFD166'];
+            const helloPage = document.getElementById('hello-page');
+            const rulesPage = document.getElementById('rules-page');
+            
+            for (let i = 0; i < 5; i++) {
+                const size = Math.random() * 80 + 40;
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.background = colors[Math.floor(Math.random() * colors.length)];
+                shape.style.top = `${Math.random() * 80 + 10}%`;
+                shape.style.left = `${Math.random() * 80 + 10}%`;
+                shape.style.animationDelay = `${Math.random() * 5}s`;
+                shape.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                helloPage.appendChild(shape.cloneNode());
+                rulesPage.appendChild(shape);
+            }
+        }
+        
+        // Panggil fungsi saat halaman dimuat
+        window.addEventListener('load', createShapes);
+    </script>
+</body>
+</html>
