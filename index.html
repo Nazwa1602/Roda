@@ -1,1 +1,183 @@
-hello
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roda Intan - Integral & Turunan</title>
+  <style>
+    body {
+      background-color: #8B0000;
+      font-family: sans-serif;
+      text-align: center;
+      color: white;
+    }
+    h1 {
+      color: #00BFFF;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+    }
+    .roda {
+      background-color: #228B22;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(#FFC0CB 60%, #FF0000 100%);
+      margin: auto;
+      position: relative;
+    }
+    .circle select {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    .koefisien {
+      top: 20px;
+      left: 80px;
+      background-color: #FF69B4;
+    }
+    .pangkat {
+      bottom: 20px;
+      right: 80px;
+      background-color: #DC143C;
+    }
+
+    /* Label tambahan */
+    .label {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: black;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .label-koef {
+      top: 65px;
+      left: 75px;
+    }
+    .label-pangkat {
+      bottom: 65px;
+      right: 60px;
+    }
+
+    .output {
+      background: #fff;
+      color: black;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>RODA INTAN</h1>
+  <div class="container">
+    <div class="roda">
+      <h2>INTEGRAL</h2>
+      <div class="circle">
+        <select class="koefisien" id="integralKoef">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <div class="label label-koef">↓ Koefisien</div>
+
+        <select class="pangkat" id="integralPangkat">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <div class="label label-pangkat">↑ Pangkat</div>
+      </div>
+      <div class="output" id="integralOutput">Hasil Integral: </div>
+    </div>
+
+    <div class="roda">
+      <h2>TURUNAN</h2>
+      <div class="circle">
+        <select class="koefisien" id="turunanKoef">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <div class="label label-koef">↓ Koefisien</div>
+
+        <select class="pangkat" id="turunanPangkat">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+        <div class="label label-pangkat">↑ Pangkat</div>
+      </div>
+      <div class="output" id="turunanOutput">Hasil Turunan: </div>
+    </div>
+  </div>
+
+  <script>
+    function updateOutputs() {
+      // INTEGRAL
+      const ik = parseInt(document.getElementById('integralKoef').value);
+      const ip = parseInt(document.getElementById('integralPangkat').value);
+      const newIP = ip + 1;
+      const integral = newIP === 0 ? "Tak terdefinisi" : (ik / newIP).toFixed(2);
+      const hasilIntegral = newIP === 0 ? "Tidak terdefinisi" : `${integral}x^${newIP} + c`;
+      document.getElementById('integralOutput').innerText = `Hasil Integral: ${hasilIntegral}`;
+
+      // TURUNAN
+      const tk = parseInt(document.getElementById('turunanKoef').value);
+      const tp = parseInt(document.getElementById('turunanPangkat').value);
+      const hasilTurunan = tp === 0 ? "0" : `${tk * tp}x^${tp - 1}`;
+      document.getElementById('turunanOutput').innerText = `Hasil Turunan: ${hasilTurunan}`;
+    }
+
+    document.querySelectorAll('select').forEach(select => {
+      select.addEventListener('change', updateOutputs);
+    });
+
+    updateOutputs(); // Inisialisasi awal
+  </script>
+</body>
+  </html>
